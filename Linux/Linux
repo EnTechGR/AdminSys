@@ -36,11 +36,26 @@ This allows you to run virtual machines - virtual computers accessible through a
 
 Operating systems are usually installed with a "disk image" that can be written to a USB stick or CD/DVD for installation on a computer, or kept as is for installation in a virtual machine (which is the case here).
 
-Install Debian (ISO installer "netinst" is recommended) in a VM (Virtual Machine). The steps are :
+Install Debian (ISO installer [netinst](https://www.debian.org/download) is recommended) in a VM (Virtual Machine). The steps are :
 
 - Create the VM.
+
+![Step 1](step_1.png)
+
+---
+
 - Start the VM and attach the ISO file as an optical drive (CD/DVD).
+
+![Step 2](step_2.png)
+
+![Step 3](step_3.png)
+
+![Step 4](step_4.png)
+---
+
 - Follow the steps of the installer, it will reboot with a Debian system ready to use.
+
+![Step 5](step_5.png)
 
 ### Shut down
 
