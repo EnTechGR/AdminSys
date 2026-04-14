@@ -107,9 +107,7 @@ With the target IP identified, a search for "open doors" was conducted at the Tr
 The final step involved an SSH connection to the discovered port. Access required careful analysis of the "Subject" and the provided images.
 
 - **Connection Command:** `ssh root@192.168.23.42 -p 4223`
-- **Credential Recovery:** - The briefing referenced *The Matrix Reloaded* and Trinity's hack.
-  - Close inspection of `scan1.png` revealed the root password used by Trinity.
-  - By accounting for common character substitutions (using 'O' instead of '0'), the correct credentials were recovered.
+- **Credential Recovery:** 
 
 ---
 
