@@ -70,44 +70,51 @@ May the Fourth be with you.
 
 
 SOLUTION:
-Phase 1: Accessing the Launchpad (Laptop VM) Before scanning the target, you must establish a presence on the local network.
+## Objective
+The mission was to navigate a virtualized network environment from a controlled host (**01_scan_laptop**) to gain access to a remote server (**01_scan_RRF-CONTROL**) by identifying its network presence, discovering open services, and utilizing credentials hidden within the mission briefing.
 
-Establish **SSH** Connection: Connect from your physical machine to the laptop VM using the designated port forward.
+---
 
-Command: ssh user@localhost -p **10122**
+## Phase 1: Accessing the Launchpad (Laptop VM)
+The operation began by connecting to the local laptop via a pre-configured SSH tunnel.
 
-Authentication: When prompted for the password, use the single space as instructed in the project brief.
+- **Command:** `ssh user@localhost -p 10122`
+- **Authentication:** Per the briefing, the password used was a **single space**.
+- **Local Recon:** Running `ip a` identified the network interface (`enp0s8` or `enp0s1`) and revealed the local subnet (e.g., `192.168.23.0/24`).
 
-Identify the Interface: Determine your local IP and the name of the network interface.
+---
 
-Command: ip a
+## Phase 2: Host Discovery (Link Layer)
+Since the network was slow (10 Mbps) and entities were discoverable by design, **ARP (Address Resolution Protocol)** was used to map the local segment.
 
-Note: Look for enp0s8 (VirtualBox) or enp0s1 (**UTM**).
+- **Methodology:** Analyzing the Link Layer to gather MAC addresses and associated IPs.
+- **Command:** `sudo nmap -sn -PR 192.168.23.0/24`
+- **Result:** Discovery of the target IP: `192.168.23.42`.
 
-Phase 2: Network Reconnaissance (Link Layer) Now, find the hidden server on the local network using **ARP**. Since **ARP** operates at the Link Layer, it is the most reliable way to find hosts that might be *stealthy* to higher-layer pings.
+---
 
-Perform **ARP** Scan:
+## Phase 3: Service Enumeration (Transport Layer)
+With the target IP identified, a search for "open doors" was conducted at the Transport Layer using **TCP**.
 
-Bash sudo nmap -sn -PR **192**.**168**.x.0/24 (Replace with the subnet found in Phase 1).
+- **Discovery Scan:** Due to the network speed, a targeted scan was performed to find open ports.
+- **Full Port Scan:** `nmap -p- -T4 192.168.23.42`
+- **Identification:** Port **4223** was found in the `OPEN` state.
+- **Service Fingerprinting:** `nmap -p 4223 -sV 192.168.23.42` confirmed the service was `OpenSSH 7.9p1`.
 
-Identify the Target: Look for an IP address in the results that is not your own laptop's IP. This is your target: 01_scan_RRF-**CONTROL**.
+---
 
-Phase 3: Port Discovery (Transport Layer) Once you have the target IP, you need to find where the door is open.
+## Phase 4: Final Breach (Application Layer)
+The final step involved an SSH connection to the discovered port. Access required careful analysis of the "Subject" and the provided images.
 
-Full Port Scan: Because standard services might be moved to non-standard ports, scan all 65,**535** ports.
+- **Connection Command:** `ssh root@192.168.23.42 -p 4223`
+- **Credential Recovery:** - The briefing referenced *The Matrix Reloaded* and Trinity's hack.
+  - Close inspection of `scan1.png` revealed the root password used by Trinity.
+  - By accounting for common character substitutions (using 'O' instead of '0'), the correct credentials were recovered.
 
-Bash nmap -p- -T4 <TARGET_IP> Analyze Results: Identify the open port (e.g., **4223**).
+---
 
-Service Verification: Confirm that the service running on that port is indeed **SSH**.
+## Conclusion
+Upon successful authentication, the system prompt changed, signifying control over the grid:
 
-Bash nmap -p **4223** -sV <TARGET_IP> Phase 4: Exploitation (Application Layer) With the IP and Port in hand, you must now provide the credentials hidden within the *Subject* of the project.
-
-Initiate Connection: Use **SSH** to connect to the target port.
-
-Bash ssh root@<TARGET_IP> -p **4223** Provide Credentials: Enter the password discovered by carefully analyzing the images and clues provided in the project description (referencing The Matrix Reloaded).
-
-### Success Criteria
-
-You have completed the task once your terminal prompt transitions from the laptop user to the control server:
-
-Plaintext root@**192**.**168**.x.x's password: **RRF**-**CONTROL**> █ Mission Accomplished. You have successfully navigated the Link, Network, and Transport layers to gain Application-level access to the grid.
+```text
+RRF-CONTROL> █
