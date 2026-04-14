@@ -31,7 +31,44 @@ For this project, you will need to add these 3 VMs:
 
 The VMs are configured according to this diagram:
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML        `N E T W O R K S                C O M P U T E R S  _______________________________     ________________________  .-----------------------------.  |           Internet          |  '-----------------------------'                 ^                 |                 v  .-----------------------------.  |            NAT              |  |                             |  |         DHCP server         |     .----------------------.  |          DNS server         |     |         box          |  |                             |     |                      |  |       (10.0.2.2) NIC        |<--->|  INT_2 (10.0.2.15)   |  |                             |     |   ^                  |  '-----------------------------'     |   |                  |  .-----------------------------.     |   |                  |  |       Internal Network      |     |   | DHCP server      |  |                             |     |   v                  |  |                           |<----->|  INT_1 (192.168.0.1) |  |                           | |     |                      |  |                           | |     '----------------------'  |                           | |     .----------------------.  |                           | |     |       machine1       |  |                           | |     |                      |  |                           |<----->|  INT_1 (192.168.0.2) |  |                           | |     |                      |  |                           | |     '----------------------'  |                           | |     .----------------------.  |                           | |     |       machine2       |  |                           | |     |                      |  |                           |<----->|  INT_1 (192.168.0.2) |  |                             |     |                      |  '-----------------------------'     '----------------------'`
+ ```
+        N E T W O R K S                C O M P U T E R S
+_______________________________     ________________________
+
+.-----------------------------.
+|          Internet           |
+'-----------------------------'
+               ^
+               |
+               v
+.-----------------------------.
+|              NAT            |
+|                             |
+|         DHCP server         |     .----------------------.
+|          DNS server         |     |         box          |
+|                             |     |                      |
+|              (10.0.2.2) NIC |<--->|  INT_2 (10.0.2.15)   |
+|                             |     |   ^                  |
+'-----------------------------'     |   |                  |
+.-----------------------------.     |   |                  |
+|      Internal Network       |     |   | DHCP server      |
+|                             |     |   v                  |
+|                           |<----->|  INT_1 (192.168.0.1) |
+|                           | |     |                      |
+|                           | |     '----------------------'
+|                           | |     .----------------------.
+|                           | |     |       machine1       |
+|                           | |     |                      |
+|                           |<----->|  INT_1 (192.168.0.2) |
+|                           | |     |                      |
+|                           | |     '----------------------'
+|                           | |     .----------------------.
+|                           | |     |       machine2       |
+|                           | |     |                      |
+|                           |<----->|  INT_1 (192.168.0.2) |
+|                             |     |                      |
+'-----------------------------'     '----------------------'
+```
 
 > **Note:** You only have control over machine2. This computer has Internet access through the box.**Credentials:** Login: root | Password: (a single space).
 
@@ -42,7 +79,7 @@ Initially, machine1 and machine2 share the same IP address (192.168.0.2), causin
 
 Bash
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   timeout --signal SIGINT 1m ping google.com   `
+`   timeout --signal SIGINT 1m ping google.com   `
 
 Solutions
 ---------
